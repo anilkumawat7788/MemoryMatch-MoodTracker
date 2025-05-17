@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 import { format, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay, addMonths, subMonths } from "date-fns"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
@@ -177,7 +177,7 @@ export default function App() {
         origin: { y: 0.6 },
       })
     }
-  }, [matchedPairs, level, gameStarted, bestScore, calculateScore]) // Add calculateScore to the dependency array
+  }, [matchedPairs, level, gameStarted, bestScore, calculateScore]) // Make sure calculateScore is included here
 
   // Timer
   useEffect(() => {
@@ -193,14 +193,14 @@ export default function App() {
   }, [isTimerRunning])
 
   // Calculate score based on moves, time and level
-  const calculateScore = () => {
+  const calculateScore = useCallback(() => {
     const baseScore = 1000
     const timeDeduction = timer * 2
     const moveDeduction = moves * 10
     const levelBonus = level * 200
 
     return Math.max(baseScore - timeDeduction - moveDeduction + levelBonus, 0)
-  }
+  }, [timer, moves, level])
 
   // Format time as MM:SS
   const formatTime = (seconds: number) => {
@@ -875,11 +875,3 @@ export default function App() {
   )
 }
 
-// // Fix the unescaped entity by using &apos;
-// <p>Don worry, your data is stored locally in your browser.</p>
-
-// // // Either use the 'name' variable or remove it
-// // // If it's not needed, remove it from the parameter list
-// // const someFunction = ({ value, otherParam }) => {
-// //   // Function implementation without using 'name'
-// // }
