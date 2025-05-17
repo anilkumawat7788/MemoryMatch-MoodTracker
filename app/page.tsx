@@ -71,7 +71,8 @@ export default function App() {
   const [timer, setTimer] = useState<number>(0)
   const [isTimerRunning, setIsTimerRunning] = useState<boolean>(false)
   const [bestScore, setBestScore] = useState<number | null>(null)
-  const [currentDate, setCurrentDate] = useState<Date>(new Date())
+  // Remove or comment out these unused variables
+  // const [currentDate, setCurrentDate] = useState<Date>(new Date())
   const [currentMonth, setCurrentMonth] = useState<Date>(new Date())
   const [moodEntries, setMoodEntries] = useState<MoodEntry[]>([])
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date())
@@ -176,7 +177,7 @@ export default function App() {
         origin: { y: 0.6 },
       })
     }
-  }, [matchedPairs, level, gameStarted, bestScore])
+  }, [matchedPairs, level, gameStarted, bestScore, calculateScore]) // Add calculateScore to the dependency array
 
   // Timer
   useEffect(() => {
@@ -232,7 +233,7 @@ export default function App() {
     const savedEntries = localStorage.getItem("moodEntries")
     if (savedEntries) {
       // Convert string dates back to Date objects
-      const parsedEntries = JSON.parse(savedEntries).map((entry: any) => ({
+      const parsedEntries = JSON.parse(savedEntries).map((entry: MoodEntry) => ({
         ...entry,
         date: new Date(entry.date),
       }))
@@ -872,4 +873,13 @@ export default function App() {
       </div>
     </div>
   )
+}
+
+// Fix the unescaped entity by using &apos;
+<p>Don&apos;t worry, your data is stored locally in your browser.</p>
+
+// Either use the 'name' variable or remove it
+// If it's not needed, remove it from the parameter list
+const someFunction = ({ value, otherParam }) => {
+  // Function implementation without using 'name'
 }
