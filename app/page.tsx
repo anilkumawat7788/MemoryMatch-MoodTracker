@@ -875,11 +875,11 @@ export default function App() {
   )
 }
 
-// Fix the unescaped entity by using &apos;
-<p>Don&apos;t worry, your data is stored locally in your browser.</p>
+// // Fix the unescaped entity by using &apos;
+// <p>Don worry, your data is stored locally in your browser.</p>
 
-// Either use the 'name' variable or remove it
-// If it's not needed, remove it from the parameter list
-const someFunction = ({ value, otherParam }) => {
-  // Function implementation without using 'name'
-}
+// // // Either use the 'name' variable or remove it
+// // // If it's not needed, remove it from the parameter list
+// // const someFunction = ({ value, otherParam }) => {
+// //   // Function implementation without using 'name'
+// // }
