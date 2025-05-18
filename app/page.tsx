@@ -158,26 +158,7 @@ export default function App() {
     }
   }
 
-  // Check for win condition
-  useEffect(() => {
-    if (gameStarted && matchedPairs === getPairsForLevel(level)) {
-      setGameWon(true)
-      setIsTimerRunning(false)
 
-      // Update best score
-      const score = calculateScore()
-      if (bestScore === null || score > bestScore) {
-        setBestScore(score)
-      }
-
-      // Trigger confetti
-      confetti({
-        particleCount: 100,
-        spread: 70,
-        origin: { y: 0.6 },
-      })
-    }
-  }, [matchedPairs, level, gameStarted, bestScore, calculateScore]) // Make sure calculateScore is included here
 
   // Timer
   useEffect(() => {
@@ -202,6 +183,26 @@ export default function App() {
     return Math.max(baseScore - timeDeduction - moveDeduction + levelBonus, 0)
   }, [timer, moves, level])
 
+    // Check for win condition
+    useEffect(() => {
+      if (gameStarted && matchedPairs === getPairsForLevel(level)) {
+        setGameWon(true)
+        setIsTimerRunning(false)
+  
+        // Update best score
+        const score = calculateScore()
+        if (bestScore === null || score > bestScore) {
+          setBestScore(score)
+        }
+  
+        // Trigger confetti
+        confetti({
+          particleCount: 100,
+          spread: 70,
+          origin: { y: 0.6 },
+        })
+      }
+    }, [matchedPairs, level, gameStarted, bestScore, calculateScore]) // Make sure calculateScore is included here
   // Format time as MM:SS
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60)
@@ -452,27 +453,27 @@ export default function App() {
           <TabsContent value="memory-game" className="pt-4">
             {/* Game stats */}
             <div className="flex flex-wrap justify-center gap-4 mb-4">
-              <div variant="outline" className="px-3 py-1 text-lg flex items-center justify-center">
+              <Button variant="outline" className="px-3 py-1 text-lg flex items-center justify-center">
                 <Trophy className="mr-1 h-4 w-4" />
                 Level: {level}
-              </div>
-              <div variant="outline" className="px-3 py-1 text-lg flex items-center justify-center">
+              </Button>
+              <Button variant="outline" className="px-3 py-1 text-lg flex items-center justify-center">
                 Moves: {moves}
-              </div>
-              <div variant="outline" className="px-3 py-1 text-lg flex items-center justify-center">
+              </Button>
+              <Button variant="outline" className="px-3 py-1 text-lg flex items-center justify-center">
                 <Timer className="mr-1 h-4 w-4" />
                 Time: {formatTime(timer)}
-              </div>
+              </Button>
               {bestScore !== null && (
-                <div variant="outline" className="px-3 py-1 text-lg flex items-center justify-center">
+                <Button variant="outline" className="px-3 py-1 text-lg flex items-center justify-center">
                   Best Score: {bestScore}
-                </div>
+                </Button>
               )}
             </div>
 
             {/* Progress bar */}
             <div className="mb-4">
-              <div value={progressPercentage} className="h-2 bg-indigo-200 rounded-full">
+              <div data-value={progressPercentage} className="h-2 bg-indigo-200 rounded-full">
                 <div className="h-2 bg-indigo-600 rounded-full" style={{ width: `${progressPercentage}%` }}></div>
               </div>
             </div>
@@ -643,7 +644,7 @@ export default function App() {
 
                   <CardFooter className="flex justify-center">
                     <Button onClick={() => handleDateSelect(new Date())} className="bg-purple-600 hover:bg-purple-700">
-                      Add Today's Mood
+                      Add Today&apos;s Mood
                     </Button>
                   </CardFooter>
                 </TabsContent>
@@ -662,7 +663,7 @@ export default function App() {
                                 <XAxis dataKey="date" tick={{ fontSize: 12 }} interval="preserveStartEnd" />
                                 <YAxis domain={[1, 5]} ticks={[1, 2, 3, 4, 5]} tick={{ fontSize: 12 }} />
                                 <Tooltip
-                                  formatter={(value, name) => [`Score: ${value}`, "Mood"]}
+                                  formatter={(value) => [`Score: ${value}`, "Mood"]}
                                   labelFormatter={(label) => `Date: ${label}`}
                                 />
                                 <Line
